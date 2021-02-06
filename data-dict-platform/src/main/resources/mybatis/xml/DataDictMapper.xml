@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yohann.dict.mapper.DataDictMapper">
+
+    <select id="getDictMapCode" resultType="com.yohann.common.dto.DictDTO">
+        select id, code as dict_key
+        from data_dict
+        where dict_type = 0
+          and parent_id = 0;
+    </select>
+
+    <select id="getDictListCode" resultType="com.yohann.common.dto.DictDTO">
+        select id, code as dict_key
+        from data_dict
+        where dict_type = 1
+          and parent_id = 0;
+    </select>
+
+    <select id="getDictMap" resultType="com.yohann.common.dto.DictDTO" parameterType="long">
+        select dict_key,dict_value from data_dict where parent_id = #{id};
+    </select>
+
+    <select id="getDictList" resultType="string" parameterType="long">
+        select dict_key from data_dict where parent_id = #{id};
+    </select>
+</mapper>
