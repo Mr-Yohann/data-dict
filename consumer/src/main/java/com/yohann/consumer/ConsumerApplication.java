@@ -3,6 +3,10 @@ package com.yohann.consumer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.net.UnknownHostException;
 
@@ -11,6 +15,10 @@ import java.net.UnknownHostException;
  * @since 2021/2/6 17:33
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@ComponentScan(basePackages = {"com.yohann"})
+@EnableDiscoveryClient
+@EnableFeignClients(basePackages = "com.yohann.common.feign")
+@EnableCaching
 public class ConsumerApplication {
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication.run(ConsumerApplication.class, args);

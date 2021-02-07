@@ -1,4 +1,4 @@
-package com.yohann.common.holder;
+package com.yohann.common.utils;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,7 @@ import java.util.Map;
  * @since 2021/2/6 17:09
  */
 public class DictHolder {
+    private final static DictHolder HOLDER = new DictHolder();
     /**
      * Dict type is map
      */
@@ -18,7 +19,7 @@ public class DictHolder {
      */
     private Map<String, List<String>> listMap;
 
-    public DictHolder() {
+    private DictHolder() {
     }
 
     public DictHolder(Map<String, Map<String, String>> dictMap, Map<String, List<String>> listMap) {
@@ -26,19 +27,11 @@ public class DictHolder {
         this.listMap = listMap;
     }
 
-    public Map<String, Map<String, String>> getDictMap() {
-        return dictMap;
-    }
-
-    public Map<String, List<String>> getListMap() {
-        return listMap;
-    }
-
     public Map<String, String> getDictMap(String code) {
         return dictMap.get(code);
     }
 
-    public synchronized void setDictMap(Map<String, Map<String, String>> dictMap) {
+    synchronized void setDictMap(Map<String, Map<String, String>> dictMap) {
         this.dictMap = dictMap;
     }
 
@@ -46,7 +39,11 @@ public class DictHolder {
         return listMap.get(code);
     }
 
-    public synchronized void setListMap(Map<String, List<String>> listMap) {
+    synchronized void setListMap(Map<String, List<String>> listMap) {
         this.listMap = listMap;
+    }
+
+    public static DictHolder getInstance() {
+        return HOLDER;
     }
 }

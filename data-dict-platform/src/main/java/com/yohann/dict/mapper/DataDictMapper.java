@@ -1,6 +1,5 @@
 package com.yohann.dict.mapper;
 
-import com.yohann.common.dto.DictDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yohann.dict.entity.DataDict;
 
@@ -16,11 +15,11 @@ import java.util.List;
  */
 public interface DataDictMapper extends BaseMapper<DataDict> {
 
-    List<DictDTO> getDictMapCode();
+    List<DataDict> getDictMapCode();
 
-    List<DictDTO> getDictListCode();
+    List<DataDict> getDictListCode();
 
-    List<DictDTO> getDictMap(Long id);
+    List<DataDict> getDictMap(Long id);
 
     List<String> getDictList(Long id);
 }

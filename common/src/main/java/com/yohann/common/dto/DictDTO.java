@@ -5,19 +5,9 @@ package com.yohann.common.dto;
  * @since 2021/2/6 17:05
  */
 public class DictDTO {
-    private Long id;
-
     private String dictKey;
 
     private String dictValue;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDictKey() {
         return dictKey;

@@ -1,6 +1,5 @@
 package com.yohann.dict.controller;
 
-import com.yohann.common.holder.DictHolder;
 import com.yohann.dict.common.result.Result;
 import com.yohann.dict.entity.DataDict;
 import com.yohann.dict.service.DataDictService;
@@ -8,6 +7,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,10 +29,16 @@ public class DataDictController {
         this.dictService = dictService;
     }
 
-    @GetMapping("getAllDict")
-    @ApiOperation("获取所有字典")
-    public DictHolder getAllDict() {
-        return dictService.getAllDict();
+    @GetMapping("getAllListDict")
+    @ApiOperation("获取所有List字典")
+    public Map<String, List<String>> getAllListDict() {
+        return dictService.getAllListDict();
+    }
+
+    @GetMapping("getAllMapDict")
+    @ApiOperation("获取所有Map字典")
+    public Map<String, Map<String, String>> getAllMapDict() {
+        return dictService.getAllMapDict();
     }
 
     @PostMapping("addOrUpdate")

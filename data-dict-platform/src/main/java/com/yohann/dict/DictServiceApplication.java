@@ -3,6 +3,7 @@ package com.yohann.dict;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
@@ -22,6 +23,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @EnableTransactionManagement
 @ComponentScan(basePackages = {"com.yohann"})
+@EnableDiscoveryClient
 public class DictServiceApplication {
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext application = SpringApplication.run(DictServiceApplication.class, args);

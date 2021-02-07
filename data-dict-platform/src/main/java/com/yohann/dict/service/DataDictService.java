@@ -1,8 +1,10 @@
 package com.yohann.dict.service;
 
-import com.yohann.common.holder.DictHolder;
 import com.yohann.dict.entity.DataDict;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -14,9 +16,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DataDictService extends IService<DataDict> {
     /**
-     * 获取所有字典
+     * 获取所有Map字典
      */
-    DictHolder getAllDict();
+    Map<String, Map<String, String>> getAllMapDict();
+
+    /**
+     * 获取所有List字典
+     */
+    Map<String, List<String>> getAllListDict();
 
     /**
      * 添加或修改字典
