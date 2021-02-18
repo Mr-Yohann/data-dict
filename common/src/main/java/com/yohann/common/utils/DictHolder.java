@@ -1,5 +1,6 @@
 package com.yohann.common.utils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +13,12 @@ public class DictHolder {
     /**
      * Dict type is map
      */
-    private Map<String, Map<String, String>> dictMap;
+    private Map<String, Map<String, String>>  dictMap = new HashMap<>();
 
     /**
      * Dict type is list
      */
-    private Map<String, List<String>> listMap;
+    private Map<String, List<String>> listMap = new HashMap<>();
 
     private DictHolder() {
     }
@@ -32,7 +33,10 @@ public class DictHolder {
     }
 
     synchronized void setDictMap(Map<String, Map<String, String>> dictMap) {
-        this.dictMap = dictMap;
+        if (!dictMap.isEmpty()) {
+            this.dictMap.clear();
+            this.dictMap.putAll(dictMap);
+        }
     }
 
     public List<String> getListMap(String code) {
@@ -40,7 +44,10 @@ public class DictHolder {
     }
 
     synchronized void setListMap(Map<String, List<String>> listMap) {
-        this.listMap = listMap;
+        if (!listMap.isEmpty()) {
+            this.listMap.clear();
+            this.listMap.putAll(listMap);
+        }
     }
 
     public static DictHolder getInstance() {
