@@ -21,7 +21,7 @@ public class DictSyncRunner implements CommandLineRunner {
     private DataDictFeign dataDictFeign;
 
     void syncDict() {
-        System.out.println("<\t\t\t====== 正在同步字典 ======>");
+    System.out.println("\t\t\t<====== 正在同步字典 ======>");
 
         try {
             DictHolder.getInstance().setListMap(dataDictFeign.getAllListDict());
