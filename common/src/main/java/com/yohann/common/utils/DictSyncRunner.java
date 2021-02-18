@@ -21,18 +21,21 @@ public class DictSyncRunner implements CommandLineRunner {
     private DataDictFeign dataDictFeign;
 
     void syncDict() {
-        System.out.println("<====== 正在同步字典 ======>");
+        System.out.println("<\t\t\t====== 正在同步字典 ======>");
+
         try {
             DictHolder.getInstance().setListMap(dataDictFeign.getAllListDict());
             DictHolder.getInstance().setDictMap(dataDictFeign.getAllMapDict());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("<====== 同步出错 ======>");
+            System.out.println("\t\t\t<====== 同步出错 ======>");
         }
-        System.out.println("<====== 同步完成 ======>");
+
+        System.out.println("\t\t\t<====== 同步完成 ======>");
     }
 
-    public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) {
         syncDict();
     }
 }
