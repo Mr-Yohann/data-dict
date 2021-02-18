@@ -1,5 +1,6 @@
 package com.yohann.consumer;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -14,9 +15,10 @@ import java.net.UnknownHostException;
  * @author Yohann
  * @since 2021/2/6 17:33
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication()
 @ComponentScan(basePackages = {"com.yohann"})
 @EnableDiscoveryClient
+@MapperScan("com.yohann.*.mapper")
 @EnableFeignClients(basePackages = "com.yohann.common.feign")
 @EnableCaching
 public class ConsumerApplication {
