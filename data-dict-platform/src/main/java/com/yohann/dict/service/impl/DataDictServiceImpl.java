@@ -1,5 +1,8 @@
 package com.yohann.dict.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yohann.dict.common.exception.DictException;
+import com.yohann.dict.common.result.ResultType;
 import com.yohann.dict.entity.DataDict;
 import com.yohann.dict.mapper.DataDictMapper;
 import com.yohann.dict.service.DataDictService;
@@ -66,9 +69,65 @@ public class DataDictServiceImpl extends ServiceImpl<DataDictMapper, DataDict> i
      * @param dict 字典信息
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addOrUpdate(DataDict dict) {
-        saveOrUpdate(dict);
+        if (dict.getId() == null) {
+            saveDict(dict);
+        }else {
+            updateDict(dict);
+        }
+    }
+
+    /**
+     * 添加字典
+     * @param dict 字典信息
+     */
+    private void saveDict(DataDict dict) {
+        QueryWrapper<DataDict> queryWrapper = getDictCheckQueryWrapper(dict);
+
+        Integer count = baseMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new DictException(ResultType.ERROR.getCode(), "The dict already exists!");
+        }
+
+        save(dict);
+    }
+
+    /**
+    * 更新字典
+    *
+    * @param dict 字典信息
+    */
+    private void updateDict(DataDict dict) {
+        QueryWrapper<DataDict> queryWrapper = getDictCheckQueryWrapper(dict);
+
+        queryWrapper.lambda().ne(DataDict::getId, dict.getId());
+        Integer count = baseMapper.selectCount(queryWrapper);
+        if (count > 0) {
+            throw new DictException(ResultType.ERROR.getCode(), "The dict already exists!");
+        }
+
+        updateById(dict);
+    }
+
+    /**
+    * 获取校验重复筛选条件
+    *
+    * @param dict 字典信息
+    * @return 查询条件
+    */
+    private QueryWrapper<DataDict> getDictCheckQueryWrapper(DataDict dict) {
+        QueryWrapper<DataDict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(DataDict::getParentId, dict.getParentId());
+
+        // 校验是否重复
+        if (dict.getParentId().equals(0L)) {
+            queryWrapper.lambda().eq(DataDict::getCode, dict.getCode());
+        } else {
+            queryWrapper.lambda().eq(DataDict::getDictKey, dict.getDictKey());
+        }
+
+        return queryWrapper;
     }
 
     /**
@@ -77,7 +136,7 @@ public class DataDictServiceImpl extends ServiceImpl<DataDictMapper, DataDict> i
      * @param id 字典id
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         baseMapper.deleteById(id);
     }
@@ -88,7 +147,7 @@ public class DataDictServiceImpl extends ServiceImpl<DataDictMapper, DataDict> i
      * @param id 字典id
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void disable(Long id) {
         DataDict dataDict = new DataDict();
         dataDict.setId(id).setStatus(false);
