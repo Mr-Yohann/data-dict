@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import java.lang.reflect.Field;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 翻译功能拦截器配置
@@ -46,6 +47,7 @@ public class TranslationConfig {
     })
     class TranslationInterceptor implements Interceptor {
 
+        @Override
         @SuppressWarnings("unchecked")
         public Object intercept(Invocation invocation) throws Throwable {
             // 获取结果集
@@ -81,7 +83,11 @@ public class TranslationConfig {
                                     Object keyFieldValue = keyField.get(object);
 
                                     // 在字典值查询对应的映射值
-                                    String translationResult = dictHolder.getDictMap(code).get(keyFieldValue.toString());
+                                    Map<String, String> dictMap = dictHolder.getDictMap(code);
+                                    String translationResult = null;
+                                    if (dictMap != null && !dictMap.isEmpty()) {
+                                        translationResult = dictMap.get(keyFieldValue.toString());
+                                    }
 
                                     // 设置需翻译字段属性
                                     field.setAccessible(true);
